@@ -1,12 +1,11 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 export const StyledMainTemplate = styled.div`
 position: relative;
-  height: 100%;
+height:100vh;
 `
 
 export const StyledMainTemplateContent = styled.div`
-  width: 600px;
-  height: 800px;
-  background-color: blueviolet;
+  width:80%;
+  margin:auto;
 `

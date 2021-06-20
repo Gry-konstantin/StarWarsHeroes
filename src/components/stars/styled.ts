@@ -47,7 +47,7 @@ const backgroundMoveAnimate = keyframes`
   0%{transform: scale(1);} 
   100%{transform: scale(2);}
 `
-export const StyledStar = styled.div<{ index: number }>`
+export const StyledStar = styled.div<{ index : number }>`
   position: absolute;
   top: 0;
   left: 0;
