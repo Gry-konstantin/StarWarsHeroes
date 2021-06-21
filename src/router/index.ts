@@ -1,1 +1,4 @@
-export * from "./endpoints"
+export enum endPoints {
+  main="/",
+  favoriteHeroes="/favorite-heroes"
+}

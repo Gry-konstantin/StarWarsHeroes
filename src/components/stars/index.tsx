@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyledStar, StyledStars } from './styled'
 
-export const Stars = function() {
+export const Stars = function () {
   const allStars = Array.from({ length: 8 })
   return (
     <StyledStars>

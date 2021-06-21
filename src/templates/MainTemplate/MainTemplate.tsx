@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyledMainTemplate, StyledMainTemplateContent } from './styled'
 import { Header } from '../../components/Header'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
+import { Stars } from '../../components/stars'
+import { CardHeroes } from '../../components/cardHeroes'
+import { CardHeroesFavorite } from '../../components/cardHeroes/cardHeroesFavorite'
 import { endPoints } from '../../router'
-import {Stars} from '../../components/stars'
-import {CardHeroes} from '../../components/cardHeroes'
-import {CardHeroesFavorite} from '../../components/cardHeroes/cardHeroesFavorite'
 
 // function func():string {
 //   return ""
@@ -17,15 +17,15 @@ import {CardHeroesFavorite} from '../../components/cardHeroes/cardHeroesFavorite
 export const MainTemplate: React.FC = () => {
   return (
     <StyledMainTemplate>
-      <Stars></Stars>
+      <Stars />
       <StyledMainTemplateContent>
-        <Header/>
+        <Header />
         <Switch>
           <Route path={endPoints.main} exact>
-            <CardHeroes/>
+            <CardHeroes />
           </Route>
           <Route path={endPoints.favoriteHeroes} exact>
-            <CardHeroesFavorite/>
+            <CardHeroesFavorite />
           </Route>
         </Switch>
       </StyledMainTemplateContent>
