@@ -1,5 +1,14 @@
 import styled,{css} from 'styled-components'
 
+export const StyledSearchHero = styled.div`
+    position:absolute;
+    top:10px;
+    right:15px;
+
+`
+
+export const StyledSearchHeroInput = styled.input`
+`
 
 export const StyledHeart = styled.div`
     position:absolute;
@@ -20,12 +29,23 @@ export const StyledCardHeroes = styled.div`
     :hover ${StyledHeart}{
         display:flex;
     }
-    width: calc(20% - 20px);
+    padding-top:30px;
+    width: calc(20% - 15px);
     height: 100%;
-    padding: 0 10px;
     position:relative;
     
 `
+export const StyledHeroName = styled.span`
+    color:#757575
+`
+export const StyledCardText = styled.div`
+    width: 100%;
+    background: #fff;
+    padding: 16px;
+    box-sizing: border-box;
+    font-family: fantasy;
+`
+
 export const StyledCardHeroesImage = styled.img<{src:string}>`
     width:100%;
     ${({ src }) => css`
@@ -35,4 +55,5 @@ export const StyledCardHeroesImage = styled.img<{src:string}>`
 export const StyledBoard = styled.div`
     display:flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 `
