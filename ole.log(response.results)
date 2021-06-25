@@ -1,0 +1,35 @@
+[33mcommit 1173d1288f032eb8002504999cc2c7784002154a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Baev Mikhail <supamiha@gmail.com>
+Date:   Mon Jun 21 22:38:00 2021 +0700
+
+    fix: shit
+
+[33mcommit 47602fa91c194393ac98007b5fcaeaeea25bbb82[m
+Author: Konstantin <kostyvava@gmail.com>
+Date:   Mon Jun 21 16:34:29 2021 +0300
+
+    add Search and pagination
+
+[33mcommit 19416f851ead9beb8eac77c0ea00674b58d7d19b[m
+Author: Ulluxa2007 <81897066+Ulluxa2007@users.noreply.github.com>
+Date:   Sun Jun 20 18:12:52 2021 +0300
+
+    addFavoriteHero
+
+[33mcommit 4aece86fcd8abb94a9d0e046113fc2bece11ee73[m
+Author: Baev Mikhail <supamiha@gmail.com>
+Date:   Sun Jun 20 15:32:57 2021 +0700
+
+    Add images stars
+
+[33mcommit 84e213e4eafc630799a7c388abbb3fa1ea705d7b[m
+Author: Baev Mikhail <supamiha@gmail.com>
+Date:   Sat Jun 19 20:44:01 2021 +0700
+
+    feat: init
+
+[33mcommit 9fbf0fbe8f549573c18a4d3555f1fc56d47f5068[m
+Author: Baev Mikhail <supamiha@gmail.com>
+Date:   Sat Jun 19 14:34:23 2021 +0700
+
+    Initialize project using Create React App

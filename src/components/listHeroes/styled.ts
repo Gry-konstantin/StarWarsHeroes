@@ -23,6 +23,13 @@ export const StyledHeart = styled.div`
   font-size: 100px;
   cursor: pointer;
 `
+export const StyledPagination = styled.div`
+text-align: end;
+`
+export const StyledNextButton = styled.button`
+`
+export const StyledPrevButton = styled.button`
+`
 export const StyledCardHeroes = styled.div`
   :hover ${StyledHeart} {
     display: flex;

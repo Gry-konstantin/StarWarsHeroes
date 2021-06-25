@@ -1,20 +1,27 @@
 import React from 'react'
-import { StyledHeader } from './styled/StyledHeader'
+import { StyledHeader ,StyledTitleYellow,StyledLogo, StyledSubtitle,StyledNavigation} from './styled/StyledHeader'
 import { Link, Route, Switch } from 'react-router-dom'
 import { endPoints } from '../../router'
 
 export const Header: React.FC = () => {
   return (
     <StyledHeader>
+      <StyledLogo>
+        <StyledTitleYellow >star</StyledTitleYellow>
+        <StyledSubtitle >A VISUAL GUIDE</StyledSubtitle>
+        <StyledTitleYellow >wars</StyledTitleYellow>
+      </StyledLogo>
       <Switch>
-        <Route path={endPoints.main} exact>
-          <div>PAGE 1</div>
-          <Link to={endPoints.favoriteHeroes}>GO TO PAGE 2</Link>
-        </Route>
-        <Route path={endPoints.favoriteHeroes} exact>
-          <div>Page 2</div>
-          <Link to={endPoints.main}>GO TO PAGE 1</Link>
-        </Route>
+        <StyledNavigation>
+          <Route path={endPoints.main} exact>
+            <div>Characters / &nbsp;</div>
+            <Link to={endPoints.favoriteHeroes}>Favorite characters</Link>
+          </Route>
+          <Route path={endPoints.favoriteHeroes} exact>
+          <Link to={endPoints.main}>Characters / &nbsp;</Link>
+            <div>Favorite characters</div>
+          </Route>
+        </StyledNavigation>
       </Switch>
     </StyledHeader>
   )

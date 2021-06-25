@@ -1,18 +1,15 @@
 import React from 'react'
 import { StyledMainTemplate, StyledMainTemplateContent } from './styled'
 import { Header } from '../../components/Header'
-import { Route, Switch } from 'react-router-dom'
-import { Stars } from '../../components/stars'
-import { CardHeroes } from '../../components/cardHeroes'
-import { CardHeroesFavorite } from '../../components/cardHeroes/cardHeroesFavorite'
+import { Switch,Route } from 'react-router-dom'
+
 import { endPoints } from '../../router'
 
-// function func():string {
-//   return ""
-// }
-// type f = () => void
+import { Stars } from '../../components/stars'
+import {MainPage} from '../../pages/MainPage'
+import { FavoriteHeroesPage } from '../../pages/FavoriteHeroesPage'
 
-// const fun:f = () => {return}
+
 
 export const MainTemplate: React.FC = () => {
   return (
@@ -22,10 +19,10 @@ export const MainTemplate: React.FC = () => {
         <Header />
         <Switch>
           <Route path={endPoints.main} exact>
-            <CardHeroes />
+            <MainPage/>
           </Route>
           <Route path={endPoints.favoriteHeroes} exact>
-            <CardHeroesFavorite />
+            <FavoriteHeroesPage/>
           </Route>
         </Switch>
       </StyledMainTemplateContent>
