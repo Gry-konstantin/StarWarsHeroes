@@ -10,7 +10,7 @@ import {
   StyledSearchHeroInput,
   StyledPrevButton,
   StyledNextButton,
-  StyledPagination
+  StyledPagination,
 } from './styled'
 import axios from 'axios'
 import useLocalStorage from 'react-use-localstorage'
@@ -18,26 +18,30 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
+import { LoadingIndicator } from '../LoadingIndicator';
 
   
 
 export const ListHeroes: React.FC = () => {
   const [favoriteHeroes, setFavoriteHeroes] = useLocalStorage('favoriteHeroes', JSON.stringify([]))
   const [pageNumber, setPageNumber] = useState(1)
-
   const [heroesCount, setHeroesCount] = useState<number>(0)
   const [heroes, setHeroes] = useState<any>([])
   const [isFetchingHeroes, setIsFetchingHeroes] = useState<boolean>(false)
+  const [searchStr, setSearchStr] = useState('')
+
 
 // new
   const queryClient = useQueryClient()
-  const { status, data, error, isFetching, isPreviousData } = useQuery(
-    ['heroes', pageNumber],
-    () => getInitHeroes(pageNumber),
+  const { isLoading, data, error, isFetching, isPreviousData } = useQuery(
+    ['heroes', pageNumber, searchStr],
+    () => getInitHeroes(pageNumber,searchStr),
     { keepPreviousData: true }
   )
+  // console.log(searchStr)
 
-  // console.log(status, data, error, isFetching, isPreviousData)
+
+
 
   useEffect(() => {
     if (data) {
@@ -45,23 +49,28 @@ export const ListHeroes: React.FC = () => {
       getInitHeroes(pageNumber)
       )
     }
-  }, [data, pageNumber, queryClient])
+  }, [isLoading, data, pageNumber, queryClient])
 
 
-  const getInitHeroes = async (page = 0) => {
-    const { data } = await axios.get(`https://swapi.dev/api/people/?page=${page}`)
-    setIsFetchingHeroes(true)
-    setHeroes(data.results)
-    setHeroesCount(data.count)
-    setIsFetchingHeroes(false)
-    return data;
+  const getInitHeroes = async (page = 0,searchStr = '') => {
+    if (searchStr === ''){
+      const { data } = await axios.get(`https://swapi.dev/api/people/?page=${page}`)
+      setIsFetchingHeroes(true)
+      setHeroes(data.results)
+      setHeroesCount(data.count)
+      setIsFetchingHeroes(false)
+      return data;
+    }else{
+      const { data } = await axios.get(`https://swapi.dev/api/people/?search=${searchStr}`)
+      setHeroes(data.results)
+      return data;
+    }
   }
-
-
-
-
-
-  const [value, setValue] = useState('')
+  console.log(isLoading, data, error, isFetching, isPreviousData, heroes)
+  // const searchPeople = async (e:string) => {
+  //   const { data } = await axios.get(`https://swapi.dev/api/people/?search=${e}`)
+  //   setHeroes(data.results)
+  // }
 
 
 
@@ -74,33 +83,23 @@ export const ListHeroes: React.FC = () => {
       e.target.removeAttribute('style', 'color:gray')
     } else {
 
-      heroes[index].srcId = srcCounter(index)
-
       favoriteHeroesCopy.push({ ...heroes[index] })
       e.target.setAttribute('style', 'color:gray')
     }
     setFavoriteHeroes(JSON.stringify(favoriteHeroesCopy))
   }
 
-  // const filteredHeroes = heroes.filter((hero:any) => {
-  //   return hero.name.toLowerCase().includes(value.toLowerCase())
-  // })
-
-
-  const srcCounter = (index:number) =>{
-    const srcId = (index:number) =>{return (pageNumber-1)*10 + index + 1}
-    if (srcId(index) >= 17){
-      return srcId(index+1)
-    }
-    else {
-      return srcId(index)
-    }
-  }
-
 
 
   return (
     <React.Fragment>
+      <StyledSearchHero>
+        <StyledSearchHeroInput
+          type="text"
+          placeholder="Search in the heroes"
+          onChange={(e) => setSearchStr(e.target.value)}
+        />
+      </StyledSearchHero>
       <StyledPagination>
         <StyledPrevButton
           onClick={() => setPageNumber(old => Math.max(old - 1, 1))}
@@ -118,27 +117,24 @@ export const ListHeroes: React.FC = () => {
         </StyledNextButton>
       </StyledPagination>
       <StyledBoard>
-        <StyledSearchHero>
-          <StyledSearchHeroInput
-            type="text"
-            placeholder="Search in the heroes"
-            onChange={(e) => setValue(e.target.value)}
-          />
-        </StyledSearchHero>
-        {heroes.map((hero:any, index:number) => {
+      {!isFetching?(
+        heroes.map((hero:any, index:number) => {
           return (
-            <StyledCardHeroes key={index}>{console.log(hero.name,favoriteHeroes)}
+            <StyledCardHeroes key={index}>
               <StyledHeart onClick={addFavorireHeroes(hero.name, index)}> ♥ </StyledHeart>
               <StyledCardHeroesImage
                 key={index}
-                src={`https://starwars-visualguide.com/assets/img/characters/${srcCounter(index)}.jpg`}
+                src={`https://starwars-visualguide.com/assets/img/characters/${hero.url.replace(/[^+\d]/g, '')}.jpg`}
               />
               <StyledCardText>
-                <StyledHeroName>{hero .name}</StyledHeroName>
+                <StyledHeroName>{hero.name}</StyledHeroName>
               </StyledCardText>
             </StyledCardHeroes>
           )
-        })}
+        })
+      ):(
+        <LoadingIndicator/>
+      )}
       </StyledBoard>
     </React.Fragment>
   )

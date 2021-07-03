@@ -12,7 +12,7 @@ export const ListHeroesFavorite: React.FC = () => {
           <StyledCardHeroes key={index}>
             <StyledCardHeroesImage
               key={index}
-              src={`https://starwars-visualguide.com/assets/img/characters/${hero.srcId}.jpg`}
+              src={`https://starwars-visualguide.com/assets/img/characters/${hero.url.replace(/[^+\d]/g, '')}.jpg`}
             />
             <StyledCardText>
               <StyledHeroName>{hero .name}</StyledHeroName>
