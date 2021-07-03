@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   StyledCardHeroes,
   StyledCardHeroesImage,
@@ -19,26 +19,33 @@ import {
   useQueryClient,
 } from "react-query";
 import { LoadingIndicator } from '../LoadingIndicator';
+import {Pagination} from '../Pagination'
 
   
 
 export const ListHeroes: React.FC = () => {
+
   const [favoriteHeroes, setFavoriteHeroes] = useLocalStorage('favoriteHeroes', JSON.stringify([]))
   const [pageNumber, setPageNumber] = useState(1)
   const [heroesCount, setHeroesCount] = useState<number>(0)
   const [heroes, setHeroes] = useState<any>([])
   const [isFetchingHeroes, setIsFetchingHeroes] = useState<boolean>(false)
   const [searchStr, setSearchStr] = useState('')
+  const [heroesPerPage, setHeroesPerPage] = useState<number>(10) 
+
+  
+  const callbackGetInitHeroes = useCallback(() => {
+    getInitHeroes(pageNumber,searchStr)
+  }, [pageNumber,searchStr])
 
 
 // new
   const queryClient = useQueryClient()
   const { isLoading, data, error, isFetching, isPreviousData } = useQuery(
     ['heroes', pageNumber, searchStr],
-    () => getInitHeroes(pageNumber,searchStr),
+    callbackGetInitHeroes,
     { keepPreviousData: true }
   )
-  // console.log(searchStr)
 
 
 
@@ -52,7 +59,9 @@ export const ListHeroes: React.FC = () => {
   }, [isLoading, data, pageNumber, queryClient])
 
 
-  const getInitHeroes = async (page = 0,searchStr = '') => {
+  const getInitHeroes = async (page = 0,searchString = '') => {
+    
+    
     if (searchStr === ''){
       const { data } = await axios.get(`https://swapi.dev/api/people/?page=${page}`)
       setIsFetchingHeroes(true)
@@ -60,17 +69,12 @@ export const ListHeroes: React.FC = () => {
       setHeroesCount(data.count)
       setIsFetchingHeroes(false)
       return data;
-    }else{
-      const { data } = await axios.get(`https://swapi.dev/api/people/?search=${searchStr}`)
+    }
+      const { data } = await axios.get(`https://swapi.dev/api/people/?search=${searchString}`)
       setHeroes(data.results)
       return data;
-    }
+    
   }
-  console.log(isLoading, data, error, isFetching, isPreviousData, heroes)
-  // const searchPeople = async (e:string) => {
-  //   const { data } = await axios.get(`https://swapi.dev/api/people/?search=${e}`)
-  //   setHeroes(data.results)
-  // }
 
 
 
@@ -88,8 +92,8 @@ export const ListHeroes: React.FC = () => {
     }
     setFavoriteHeroes(JSON.stringify(favoriteHeroesCopy))
   }
-
-
+  
+  const paginate = (numberOfPage:number) => setPageNumber(numberOfPage)
 
   return (
     <React.Fragment>
@@ -107,11 +111,10 @@ export const ListHeroes: React.FC = () => {
         >
           Prev
         </StyledPrevButton>
-
+        <Pagination heroesPerPage = {heroesPerPage} heroesCount = {heroesCount} paginate={paginate}/>
         <StyledNextButton
-        onClick={() => {
-          setPageNumber(old => ( old + 1 ))
-        }}
+        onClick={() => {setPageNumber(old => ( old + 1 ))}}
+        disabled={pageNumber === Math.ceil(heroesCount/heroesPerPage)}
         >
           Next
         </StyledNextButton>

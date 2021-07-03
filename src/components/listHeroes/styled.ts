@@ -31,11 +31,14 @@ export const StyledNextButton = styled.button`
 export const StyledPrevButton = styled.button`
 `
 export const StyledCardHeroes = styled.div`
+  :nth-child(5n){
+    padding-right:0px
+  }
   :hover ${StyledHeart} {
     display: flex;
   }
-  padding-top: 30px;
-  width: calc(20% - 15px);
+  padding: 30px 15px 0 0;
+  width: calc(20% - 12px);
   height: 100%;
   position: relative;
 `
@@ -59,7 +62,6 @@ export const StyledCardHeroesImage = styled.img<{ src: string }>`
 export const StyledBoard = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   padding-bottom:40px;
 `
 
