@@ -1,15 +1,13 @@
 import styled from 'styled-components'
 export const StyledNavigation = styled.nav`
-
+    display:inline-block;
+    height:27px;
 `
 export const StyledPagination = styled.ul`
     list-style: none;
     display: inline-block;
     padding: 0;
-    margin-top: 10px;
-    -moz-box-shadow: 0 2px 2px #333;
-    -webkit-box-shadow: 0 2px 2px #333;
-    box-shadow: 0 2px 2px #333;
+    margin: 0px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
     border-radius: 50px;
@@ -20,17 +18,17 @@ export const StyledPageItem = styled.li`
 `
 export const StyledPageLink = styled.a`
     :hover {
-        color: #E34E48;
+        color: #333;
         background-color: #eee;
     }
-    color: #999;
-    background: #fff;
-    padding: 10px 15px;
+    color: #fbea56;
+    background: #333;
+    padding: 5px 10px;
     float: left;
     display: block;
-    font-size: 14px;
+    font-size: 10px;
     text-decoration: none;
     margin-left: -1px;
-    border: 1px solid #ddd;
+    border: 1px solid #000;
     line-height: 1.5;
 `

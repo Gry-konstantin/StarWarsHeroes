@@ -35,9 +35,9 @@ export const ListHeroes: React.FC = () => {
 
   
   const callbackGetInitHeroes = useCallback(() => {
-    getInitHeroes(pageNumber,searchStr)
+    return getInitHeroes(pageNumber,searchStr)
   }, [pageNumber,searchStr])
-
+ 
 
 // new
   const queryClient = useQueryClient()
@@ -46,6 +46,7 @@ export const ListHeroes: React.FC = () => {
     callbackGetInitHeroes,
     { keepPreviousData: true }
   )
+  console.log('isLoading :'+isLoading, 'data:'+data, 'isFetching:'+isFetching,'eror:'+error)
 
 
 
@@ -53,15 +54,13 @@ export const ListHeroes: React.FC = () => {
   useEffect(() => {
     if (data) {
       queryClient.prefetchQuery(['projects', pageNumber], () =>
-      getInitHeroes(pageNumber)
+      callbackGetInitHeroes
       )
     }
   }, [isLoading, data, pageNumber, queryClient])
 
 
   const getInitHeroes = async (page = 0,searchString = '') => {
-    
-    
     if (searchStr === ''){
       const { data } = await axios.get(`https://swapi.dev/api/people/?page=${page}`)
       setIsFetchingHeroes(true)
@@ -73,7 +72,6 @@ export const ListHeroes: React.FC = () => {
       const { data } = await axios.get(`https://swapi.dev/api/people/?search=${searchString}`)
       setHeroes(data.results)
       return data;
-    
   }
 
 
@@ -109,14 +107,14 @@ export const ListHeroes: React.FC = () => {
           onClick={() => setPageNumber(old => Math.max(old - 1, 1))}
           disabled={pageNumber === 1}
         >
-          Prev
+          &#171;
         </StyledPrevButton>
         <Pagination heroesPerPage = {heroesPerPage} heroesCount = {heroesCount} paginate={paginate}/>
         <StyledNextButton
         onClick={() => {setPageNumber(old => ( old + 1 ))}}
         disabled={pageNumber === Math.ceil(heroesCount/heroesPerPage)}
         >
-          Next
+          &#187;
         </StyledNextButton>
       </StyledPagination>
       <StyledBoard>

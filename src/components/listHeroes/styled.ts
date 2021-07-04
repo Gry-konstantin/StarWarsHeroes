@@ -24,16 +24,33 @@ export const StyledHeart = styled.div`
   cursor: pointer;
 `
 export const StyledPagination = styled.div`
-text-align: end;
+  display:flex;
+  justify-content: flex-end;
+  padding-top: 30px;
 `
 export const StyledNextButton = styled.button`
+  :disabled{opacity:0.6;}
+  color: #fbea56;
+  background: #333;
+  padding: 3px 10px;
+  font-size:15px;
 `
 export const StyledPrevButton = styled.button`
+  :disabled{opacity:0.6;}
+  color: #fbea56;
+  background: #333;
+  padding: 3px 10px;
+  font-size:15px;
 `
 export const StyledCardHeroes = styled.div`
   :nth-child(5n){
     padding-right:0px
   }
+  :nth-child(1){padding-top:10px;}
+  :nth-child(2){padding-top:10px;}
+  :nth-child(3){padding-top:10px;}
+  :nth-child(4){padding-top:10px;}
+  :nth-child(5){padding-top:10px;}
   :hover ${StyledHeart} {
     display: flex;
   }

@@ -9,10 +9,9 @@ interface IPaginationProps {
 
 export const Pagination: FC<IPaginationProps> = ({heroesCount, heroesPerPage, paginate}) => {
     const amountPage = useMemo(() => Math.ceil(heroesCount / heroesPerPage), [heroesCount,heroesPerPage]);
-    // const [amountPage,setAmountPage] = useState(heroesCount / heroesPerPage)
-    console.log(amountPage)
 
-    return (<StyledNavigation>
+    return (
+    <StyledNavigation>
         <StyledPagination>
             {Array.from({length: amountPage}).map((item, index)=>
                 <StyledPageItem key = {index}>
