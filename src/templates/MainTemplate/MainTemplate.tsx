@@ -5,7 +5,7 @@ import { Switch,Route } from 'react-router-dom'
 
 import { endPoints } from '../../router'
 
-import { Stars } from '../../components/stars'
+import { Stars } from '../../components/StarrySky'
 import {MainPage} from '../../pages/MainPage'
 import { FavoriteHeroesPage } from '../../pages/FavoriteHeroesPage'
 

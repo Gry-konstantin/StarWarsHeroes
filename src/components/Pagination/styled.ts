@@ -12,11 +12,11 @@ export const StyledPagination = styled.ul`
     -webkit-border-radius: 50px;
     border-radius: 50px;
 `
-export const StyledPageItem = styled.li`
+export const StyledPageItem =  styled.li`
     display: inline;
     text-align: center;
 `
-export const StyledPageLink = styled.a`
+export const StyledPageLink =  styled.a<{isSelected: boolean}>`
     :hover {
         color: #333;
         background-color: #eee;
@@ -31,4 +31,8 @@ export const StyledPageLink = styled.a`
     margin-left: -1px;
     border: 1px solid #000;
     line-height: 1.5;
+    ${({ isSelected }) => isSelected && `
+      color: #333;
+      background-color: #eee;
+    `}
 `

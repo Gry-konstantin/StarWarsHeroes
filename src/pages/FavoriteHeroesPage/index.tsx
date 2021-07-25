@@ -1,7 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { ListHeroesFavorite } from '../../components/listHeroes/listHeroesFavorite'
-import { endPoints } from '../../router'
+import { ListHeroesFavorite } from '../../components/listHeroesFavorite'
 
 
 

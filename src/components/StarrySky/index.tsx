@@ -11,5 +11,3 @@ export const Stars = function () {
     </StyledStars>
   )
 }
-
-// export const MainTemplate: React.FC = () => {

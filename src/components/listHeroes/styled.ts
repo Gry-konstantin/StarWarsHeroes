@@ -8,7 +8,7 @@ export const StyledSearchHero = styled.div`
 
 export const StyledSearchHeroInput = styled.input``
 
-export const StyledHeart = styled.div`
+export const StyledHeart = styled.div<{isFavoriteHero: boolean}>`
   position: absolute;
   top: 0;
   left: 0;
@@ -22,6 +22,9 @@ export const StyledHeart = styled.div`
   align-items: center;
   font-size: 100px;
   cursor: pointer;
+  ${({ isFavoriteHero }) => isFavoriteHero && `
+    color: gray;
+  `}
 `
 export const StyledPagination = styled.div`
   display:flex;
