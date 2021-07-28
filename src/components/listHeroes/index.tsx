@@ -12,16 +12,17 @@ import {
   StyledNextButton,
   StyledPagination,
 } from './styled'
-import axios from 'axios'
+import api from '../../api'
 import useLocalStorage from 'react-use-localstorage'
-import {
-  useQuery,
-  useQueryClient,
-} from "react-query";
 import { LoadingIndicator } from '../LoadingIndicator';
 import {Pagination} from '../Pagination'
 
 const heroesPerPage = 10
+
+interface INameOfHeroes {
+  name:string;
+  url:string;
+}
 
 export const ListHeroes: React.FC = () => {
 
@@ -30,51 +31,42 @@ export const ListHeroes: React.FC = () => {
   const [heroesCount, setHeroesCount] = useState<number>(0)
   const [heroes, setHeroes] = useState<any>([]) //
   const [searchStr, setSearchStr] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   
-  const callbackGetInitHeroes = useCallback(() => {
-    const getInitHeroes = async (page = 0,searchString = '') => {
-      if (!searchStr){
-        const { data } = await axios.get(`https://swapi.dev/api/people/?page=${page}`)//error handler
-        setHeroes(data.results)
-        setHeroesCount(data.count)
-        return data;
-      }
-      const { data } = await axios.get(`https://swapi.dev/api/people/?search=${searchString}`)
+  const callbackGetInitHeroes = useCallback(async() => {
+    setIsLoading(true)
+    if (!searchStr){
+      const { data } = await api.get(`?page=${pageNumber}`)//error handler
       setHeroes(data.results)
       setHeroesCount(data.count)
+      setIsLoading(false)
       return data;
     }
-    return getInitHeroes(pageNumber,searchStr)
+      const { data } = await api.get(`?search=${searchStr}`)
+      setHeroes(data.results)
+      setHeroesCount(data.count)
+      setIsLoading(false)
+      return data;
+
   }, [pageNumber,searchStr])
  
 
-// new
-  const queryClient = useQueryClient()
-  const { isLoading, data, isFetching } = useQuery(
-    ['heroes', pageNumber, searchStr],
-    callbackGetInitHeroes,
-    { keepPreviousData: true }
-  )
 
 
 
 
   useEffect(() => {
-    if (data) {
-      queryClient.prefetchQuery(['projects', pageNumber], () =>
-      callbackGetInitHeroes
-      )
-    }
-  }, [isLoading, data, pageNumber, queryClient,callbackGetInitHeroes])
+      callbackGetInitHeroes()
+  }, [pageNumber,searchStr,callbackGetInitHeroes])
 
 
 
 
-  const addFavorireHeroes = (name: string, index: number) => (e: any) => {
+  const addFavorireHeroes = (name: string, index: number) => (e: React.MouseEvent) => {
     const favoriteHeroesCopy = JSON.parse(favoriteHeroes)
-
-    const heroIndex = favoriteHeroesCopy.findIndex((hero:any) => hero.name === name)
+    favoriteHeroesCopy.forEach((item:INameOfHeroes)=>{console.log(item)})
+    const heroIndex = favoriteHeroesCopy.findIndex((hero:INameOfHeroes) => hero.name === name)
     if (heroIndex !== -1) {
       favoriteHeroesCopy.splice(heroIndex, 1)
     } else {
@@ -83,8 +75,8 @@ export const ListHeroes: React.FC = () => {
     }
     setFavoriteHeroes(JSON.stringify(favoriteHeroesCopy))
   }
-  const isFavoriteHero = (hero:any) => {
-    return (JSON.parse(favoriteHeroes).some( (item:any) => {return item.name === hero.name}))
+  const isFavoriteHero = (hero:INameOfHeroes) => {
+    return (JSON.parse(favoriteHeroes).some( (heroes:INameOfHeroes) => {return heroes.name === hero.name}))
   }
   
   const paginate = (numberOfPage:number) => setPageNumber(numberOfPage)
@@ -118,8 +110,8 @@ export const ListHeroes: React.FC = () => {
           <StyledPagination/>
         )}
       <StyledBoard>
-      {!isFetching?(
-        heroes.map((hero:any, index:number) => {
+      {!isLoading?(
+        heroes.map((hero:INameOfHeroes, index:number) => {
           return (
             <StyledCardHeroes key={index}>
               <StyledHeart
